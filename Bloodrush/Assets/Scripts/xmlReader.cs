@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Xml;
-using System.ComponentModel;
 
 [System.Serializable]
 public class Elements
@@ -18,7 +16,6 @@ public enum Languages
     German
 };
 
-[CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
 public class xmlReader : MonoBehaviour
 { 
     public TextAsset dictionary;
