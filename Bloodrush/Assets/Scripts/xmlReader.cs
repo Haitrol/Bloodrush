@@ -54,8 +54,8 @@ public class xmlReader : MonoBehaviour
         languages[currentLanguage].TryGetValue("Name", out languageName);
         languages[currentLanguage].TryGetValue("Button1", out Button1);
         languages[currentLanguage].TryGetValue("Button2", out Button2);
-        elem.test.GetComponentInChildren<Text>().text = Button1;
-        elem.bla.GetComponentInChildren<Text>().text = Button2;
+        //elem.test.GetComponentInChildren<Text>().text = Button1;
+        //elem.bla.GetComponentInChildren<Text>().text = Button2;
     }
 
     void Reader()
