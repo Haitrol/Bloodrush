@@ -4,12 +4,16 @@ using System.Collections;
 
 public class SwipeScript : MonoBehaviour {
 
-    public float sMagnitude = 5.0f;
+    public float flickMagnitude = 5.0f;
     public float pageChangeSpeed = 30.0f;
 
     public GameObject homePoint;
     public GameObject scrollPointRight;
     public GameObject scrollPointLeft;
+
+    public float swipeSpeed;
+
+    public bool swipeLock { get; set; }
 
     Vector2 touchDelta;
     bool canSwipe = true;
@@ -18,36 +22,37 @@ public class SwipeScript : MonoBehaviour {
     bool atLeft = false;
     bool atRight = false;
 
-    string debugString = "DEBUG";
+    string debugString = "";
     GUIStyle style;
     
     void Start()
     {
         Input.simulateMouseWithTouches = false;
+        debugString = atHome + "" + atRight + canSwipe;
     }
 
     void Update ()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        if (!swipeLock && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             touchDelta += Input.GetTouch(0).deltaPosition;
-            //transform.Translate(-touchDelta.x /10, 0, 0);
-            //Mathf.Clamp(transform.position.x, scrollPointLeft.transform.position.x, scrollPointRight.transform.position.x);
+            Vector2 touchMoveDelta = Input.GetTouch(0).deltaPosition;
+            transform.Translate(-touchMoveDelta.x * swipeSpeed, 0, 0);
         }
-        
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, scrollPointLeft.transform.position.x, scrollPointRight.transform.position.x), transform.position.y, transform.position.z);
+
+        if (!swipeLock && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             //Vector2 touchDelta = Input.GetTouch(0).deltaPosition;
                 
-            if (touchDelta.x > sMagnitude && canSwipe)
+            if (touchDelta.x > flickMagnitude && canSwipe)
             {
-                debugString = "FLICK RIGHT!" + atHome + atRight + canSwipe;
-
                 if (atHome)
                 {
                     atHome = false;
                     atLeft = true;
                     canSwipe = false;
+                    //touchDelta = Vector2.zero;
                     StartCoroutine(MoveCamera(scrollPointLeft.transform.position.x, 0));
                 }
 
@@ -56,20 +61,19 @@ public class SwipeScript : MonoBehaviour {
                     atHome = true;
                     atRight = false;
                     canSwipe = false;
+                    //touchDelta = Vector2.zero;
                     StartCoroutine(MoveCamera(homePoint.transform.position.x, 0));
                 }
             };
         
-            if (touchDelta.x < -sMagnitude && canSwipe)
+            if (touchDelta.x < -flickMagnitude && canSwipe)
             {
-                debugString = "FLICK LEFT!" + atHome + atLeft +canSwipe;
-
                 if (atHome)
                 {
                     atHome = false;
                     atRight = true;
                     canSwipe = false;
-
+                    //touchDelta = Vector2.zero;
                     StartCoroutine(MoveCamera(scrollPointRight.transform.position.x, 0));
                 }
 
@@ -78,19 +82,21 @@ public class SwipeScript : MonoBehaviour {
                     atHome = true;
                     atLeft = false;
                     canSwipe = false;
-
+                    //touchDelta = Vector2.zero;
                     StartCoroutine(MoveCamera(homePoint.transform.position.x, 0));
                 }
             };
+
+            touchDelta = Vector2.zero;
         }
     }
 
     void OnGUI()
     {
         style = new GUIStyle();
-        style.fontSize = 60;
+        style.fontSize = Screen.width/10;
         style.normal.textColor = Color.white;
-        GUILayout.TextArea(debugString, style);
+        //GUILayout.TextArea(debugString, style);
     }
 
     public IEnumerator MoveCamera(float a, int upDown)
