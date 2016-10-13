@@ -7,62 +7,91 @@ public class SwipeScript : MonoBehaviour {
     public float sMagnitude = 5.0f;
     public float pageChangeSpeed = 30.0f;
 
+    public GameObject homePoint;
+    public GameObject scrollPointRight;
+    public GameObject scrollPointLeft;
+
+    Vector2 touchDelta;
     bool canSwipe = true;
     float swipeCD = 0.1f;
+    bool atHome = true;
+    bool atLeft = false;
+    bool atRight = false;
 
     string debugString = "DEBUG";
     GUIStyle style;
     
+    void Start()
+    {
+        Input.simulateMouseWithTouches = false;
+    }
+
     void Update ()
     {
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
-            Vector2 touchDelta = Input.GetTouch(0).deltaPosition;
-            //transform.Translate(-touchDelta.x, 0, 0);
+            touchDelta += Input.GetTouch(0).deltaPosition;
+            //transform.Translate(-touchDelta.x /10, 0, 0);
+            //Mathf.Clamp(transform.position.x, scrollPointLeft.transform.position.x, scrollPointRight.transform.position.x);
         }
         
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
-            Vector2 touchDelta = Input.GetTouch(0).deltaPosition;
-        
-            //if (touchDelta.y > sMagnitude && canSwipe)
-            //{
-            //    Debug.Log("FLICK UP!");
-            //    StartCoroutine(MoveCamera(0,1));
-            //    canSwipe = false;
-            //};
-        
-            //if (touchDelta.y < -sMagnitude && canSwipe)
-            //{
-            //    Debug.Log("FLICK DOWN!");
-            //    StartCoroutine(MoveCamera(116, 1));
-            //    canSwipe = false;
-            //};
-        
+            //Vector2 touchDelta = Input.GetTouch(0).deltaPosition;
+                
             if (touchDelta.x > sMagnitude && canSwipe)
             {
-                debugString = "FLICK RIGHT!";
-                StartCoroutine(MoveCamera(0,0));
-                canSwipe = false;
+                debugString = "FLICK RIGHT!" + atHome + atRight + canSwipe;
+
+                if (atHome)
+                {
+                    atHome = false;
+                    atLeft = true;
+                    canSwipe = false;
+                    StartCoroutine(MoveCamera(scrollPointLeft.transform.position.x, 0));
+                }
+
+                if (atRight)
+                {
+                    atHome = true;
+                    atRight = false;
+                    canSwipe = false;
+                    StartCoroutine(MoveCamera(homePoint.transform.position.x, 0));
+                }
             };
         
             if (touchDelta.x < -sMagnitude && canSwipe)
             {
-                debugString = "FLICK LEFT!";
-                StartCoroutine(MoveCamera(65,0));
-                canSwipe = false;
+                debugString = "FLICK LEFT!" + atHome + atLeft +canSwipe;
+
+                if (atHome)
+                {
+                    atHome = false;
+                    atRight = true;
+                    canSwipe = false;
+
+                    StartCoroutine(MoveCamera(scrollPointRight.transform.position.x, 0));
+                }
+
+                if (atLeft)
+                {
+                    atHome = true;
+                    atLeft = false;
+                    canSwipe = false;
+
+                    StartCoroutine(MoveCamera(homePoint.transform.position.x, 0));
+                }
             };
         }
-        Debug.Log(debugString);            
     }
 
-    //void OnGUI()
-    //{
-    //    style = new GUIStyle();
-    //    style.fontSize = 60;
-    //    style.normal.textColor = Color.white;
-    //    GUILayout.TextArea(debugString, style);
-    //}
+    void OnGUI()
+    {
+        style = new GUIStyle();
+        style.fontSize = 60;
+        style.normal.textColor = Color.white;
+        GUILayout.TextArea(debugString, style);
+    }
 
     public IEnumerator MoveCamera(float a, int upDown)
     {
@@ -93,14 +122,18 @@ public class SwipeScript : MonoBehaviour {
     public void ArrowR()
     {
         if (canSwipe)
+        {
             canSwipe = false;
-        StartCoroutine(MoveCamera(65,0));
+            StartCoroutine(MoveCamera(65, 0));
+        }
     }
     public void ArrowL()
     {
         if (canSwipe)
+        {
             canSwipe = false;
-        StartCoroutine(MoveCamera(0, 0));
+            StartCoroutine(MoveCamera(0, 0));
+        }
     }
 
 }
