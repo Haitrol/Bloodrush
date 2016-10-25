@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ClickHandler : MonoBehaviour {
 
-    public int scoreAmount = 1;
+    int scoreAmount = 1;
 
     public LayerMask heartLayer;
 
@@ -14,8 +14,8 @@ public class ClickHandler : MonoBehaviour {
     void Start()
     {
         cam = Camera.main.GetComponent<Camera>();
-        sm = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
-        anim = GetComponent<Animator>();
+        sm = GameObject.FindGameObjectWithTag("Managers").GetComponent<ScoreManager>();
+        //anim = GetComponent<Animator>();
     }
 
 	void Update()
@@ -26,8 +26,17 @@ public class ClickHandler : MonoBehaviour {
 
             if (Physics.Raycast(ray, heartLayer))
             {
-                sm.IncreaseScore(scoreAmount);
-                anim.SetTrigger("DokiDoki");
+                sm.IncreaseOxygen();
+                //anim.SetTrigger("DokiDoki");
+            }
+        }else if(Input.GetMouseButtonDown(0))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, heartLayer))
+            {
+                sm.IncreaseOxygen();
+                //anim.SetTrigger("DokiDoki");
             }
         }
     }
