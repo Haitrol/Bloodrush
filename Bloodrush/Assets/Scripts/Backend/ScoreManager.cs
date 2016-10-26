@@ -13,9 +13,14 @@ public class ScoreManager : MonoBehaviour {
 
     public Text scoreText;
 
+    static int obg;
+    static int cbg;
+
     void Start()
     {
         multiplier = 1;
+        obg = oxygenBaseGain;
+        cbg = calorieBaseGain;
     }
 
     void Update()
@@ -23,28 +28,44 @@ public class ScoreManager : MonoBehaviour {
         scoreText.text = oxygen.ToString();
     }
 
-    int CalculateAmount()
+    static int CalculateO2Amount()
     {
-        float calc = oxygen + oxygenBaseGain * multiplier;
+        float calc = oxygen + obg * multiplier;
         return (int)calc;
     }
 
-    public void IncreaseOxygen()
+    static int CalculateCALAmount()
     {
-        oxygen = CalculateAmount();
+        float calc = oxygen + cbg * multiplier;
+        return (int)calc;
     }
 
-    public void DecreaseOxygen(int amount)
+    public static void IncreaseOxygen()
+    {
+        oxygen = CalculateO2Amount();
+    }
+
+    public static void DecreaseOxygen(int amount)
     {
         oxygen = oxygen - amount;
     }
 
-    public void IncreaseMult(float amount)
+    public static void IncreaseCalories()
+    {
+        calories = CalculateCALAmount();
+    }
+
+    public static void DecreaseCalories(int amount)
+    {
+        calories = oxygen - amount;
+    }
+
+    public static void IncreaseMult(float amount)
     {
         multiplier += amount;
     }
     
-    public void DecreaseMult(float amount)
+    public static void DecreaseMult(float amount)
     {
         multiplier -= amount;
     }    

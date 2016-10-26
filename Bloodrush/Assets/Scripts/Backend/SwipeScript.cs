@@ -22,13 +22,13 @@ public class SwipeScript : MonoBehaviour {
     bool atLeft = false;
     bool atRight = false;
 
-    string debugString = "";
+    //string debugString = "";
     GUIStyle style;
     
     void Start()
     {
         Input.simulateMouseWithTouches = false;
-        debugString = atHome + "" + atRight + canSwipe;
+        //debugString = atHome + "" + atRight + canSwipe;
     }
 
     void Update ()

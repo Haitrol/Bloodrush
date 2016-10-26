@@ -5,37 +5,24 @@ public class BeatManager : MonoBehaviour {
 
     public float beatDelay = 1;
 
-    ScoreManager sm;
     //implement animator
 
-    void Start()
-    {
-        sm = GameObject.FindWithTag("Managers").GetComponent<ScoreManager>();
-    }
-
-    void Update()
-    {
-        Debug.Log(beatDelay);
-    }
-
-    public void EnableAuto()
-    {
-        InvokeRepeating("Incr", 0, beatDelay);
-    }
-
+    //Function for InvokeRepeating
     void Incr()
     {
-        sm.IncreaseOxygen();
+        ScoreManager.IncreaseOxygen();
     }
 
+    //Decreases the time between beats by a specified amount
     public void TimeBetweenBeats(float value)
     {
-        CancelInvoke("Incr");
+        if(IsInvoking("Incr"))
+            CancelInvoke("Incr");
 
         beatDelay -= value;
         beatDelay = Mathf.Clamp(beatDelay, 0.0001f, 10000);
-        
-        EnableAuto();
+
+        InvokeRepeating("Incr", 0, beatDelay);
     }
 
 }

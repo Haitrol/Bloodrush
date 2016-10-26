@@ -24,8 +24,8 @@ public class xmlReader : MonoBehaviour
 
     public Elements elem;
     int currentLanguage = (int)Languages.English;
-    string Button1;
-    string Button2;
+    //string Button1;
+    //string Button2;
     List<Dictionary<string,string>> languages = new List<Dictionary<string, string>>();
     Dictionary<string, string> obj;
 
@@ -52,8 +52,8 @@ public class xmlReader : MonoBehaviour
     void UpdateLanguage()
     {
         languages[currentLanguage].TryGetValue("Name", out languageName);
-        languages[currentLanguage].TryGetValue("Button1", out Button1);
-        languages[currentLanguage].TryGetValue("Button2", out Button2);
+        //languages[currentLanguage].TryGetValue("Button1", out Button1);
+        //languages[currentLanguage].TryGetValue("Button2", out Button2);
         //elem.test.GetComponentInChildren<Text>().text = Button1;
         //elem.bla.GetComponentInChildren<Text>().text = Button2;
     }
