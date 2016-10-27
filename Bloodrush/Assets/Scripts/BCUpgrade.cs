@@ -2,21 +2,19 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class BPMUpgrade : Upgrade {
+public class BCUpgrade : Upgrade {
 
-    public float BPMIncrease;
-    public int cost;
+    public int multiplierIncrease;
+    public int o2Cost;
 
     Button upgradeButton;
-    BeatManager bm;
 
     void Start()
     {
-        bm = GameObject.FindGameObjectWithTag("Managers").GetComponent<BeatManager>();
-
         if (!GetComponent<Button>())
         {
             Debug.Log("Make sure this script is attached to a Button!");
+            return;
         }
         else
         {
@@ -28,7 +26,7 @@ public class BPMUpgrade : Upgrade {
     {
         if (upgradeButton)
         {
-            if (ScoreManager.calories < cost)
+            if (ScoreManager.oxygen < o2Cost)
                 upgradeButton.interactable = false;
             else
                 upgradeButton.interactable = true;
@@ -37,6 +35,6 @@ public class BPMUpgrade : Upgrade {
 
     public void LevelUp()
     {
-        BuyBPM(BPMIncrease, cost, bm);
+        BuyBC(multiplierIncrease, o2Cost);
     }
 }

@@ -7,10 +7,10 @@ public class Upgrade : MonoBehaviour {
     //Curve
     //public float growthRate = 1;
         
-    public void BuyBPM(float BPMAmount, int CALCost, BeatManager bm)
+    public void BuyBPM(float BPMAmount, int CalCost, BeatManager bm)
     {
         bm.TimeBetweenBeats(BPMAmount);
-        ScoreManager.DecreaseCalories(CALCost);
+        ScoreManager.DecreaseCalories(CalCost);
     }
 
     public void BuyBC(int BCAmount, int O2Cost)
@@ -19,9 +19,11 @@ public class Upgrade : MonoBehaviour {
         ScoreManager.DecreaseOxygen(O2Cost);
     }
 
-    public void BuyCAL(int CALAmount, int O2Cost)
+    public void BuyCAL(int CalAmount, int O2Cost, int O2pBCost)
     {
-        //todo
+        ScoreManager.IncreaseCALMult(CalAmount);
+        ScoreManager.DecreaseOxygen(O2Cost);
+        ScoreManager.DecreaseMult(O2pBCost);
     }
 
 }

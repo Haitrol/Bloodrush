@@ -35,6 +35,7 @@ public class ClickHandler : MonoBehaviour {
         if (Physics.Raycast(ray, heartLayer))
         {
             ScoreManager.IncreaseOxygen();
+            ScoreManager.IncreaseCalories();
         }
     }
 
@@ -45,6 +46,7 @@ public class ClickHandler : MonoBehaviour {
         if (Physics.Raycast(ray, heartLayer))
         {
             ScoreManager.IncreaseOxygen();
+            ScoreManager.IncreaseCalories();
         }
     }
 }

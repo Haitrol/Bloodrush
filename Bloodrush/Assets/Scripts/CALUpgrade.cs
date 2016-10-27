@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System.Collections;
 
-public class BCUpgrade : Upgrade {
+public class CALUpgrade : Upgrade {
 
-    public int multiplierIncrease;
-    public int cost;
+    public int CALMultIncr;
+    public int o2PBCost;
+    public int O2Cost;
 
     Button upgradeButton;
 
@@ -14,6 +15,7 @@ public class BCUpgrade : Upgrade {
         if (!GetComponent<Button>())
         {
             Debug.Log("Make sure this script is attached to a Button!");
+            return;
         }
         else
         {
@@ -25,7 +27,7 @@ public class BCUpgrade : Upgrade {
     {
         if (upgradeButton)
         {
-            if (ScoreManager.oxygen < cost)
+            if (ScoreManager.oxygen < O2Cost || ScoreManager.multiplier < o2PBCost)
                 upgradeButton.interactable = false;
             else
                 upgradeButton.interactable = true;
@@ -34,6 +36,6 @@ public class BCUpgrade : Upgrade {
 
     public void LevelUp()
     {
-        BuyBC(multiplierIncrease, cost);
+        BuyCAL(CALMultIncr, O2Cost, o2PBCost);
     }
 }

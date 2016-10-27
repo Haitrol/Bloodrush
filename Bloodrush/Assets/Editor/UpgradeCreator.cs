@@ -9,7 +9,7 @@ public class UpgradeCreator : EditorWindow
 
     string[] options = new string[]
     {
-        "Heart Upgrade(BPM)", "Blood Cells(Multiplier)", "Muscles(Calories)"
+        "Blood Cells(Multiplier)", "Heart Upgrade(BPM)", "Muscles(Calories)"
     };
 
     [MenuItem("Window/Upgrade Creator")]
@@ -39,7 +39,7 @@ public class UpgradeCreator : EditorWindow
                     CreateBuyButton(upgradeName, "BPMUpgradeButton");
                     break;
                 case 2:
-                    Debug.Log("Not defined");
+                    CreateBuyButton(upgradeName, "CALUpgradeButton");
                     break;
             }
         }
