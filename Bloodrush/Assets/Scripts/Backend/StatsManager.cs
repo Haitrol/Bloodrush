@@ -21,9 +21,7 @@ public class StatsManager : MonoBehaviour {
         {
             t += Time.deltaTime;
             
-            float avg = bm.beat / (t*60);
-            avg *= 100;
-            avg = (int)avg;
+            float avg = Mathf.RoundToInt((bm.beat / (t*60))*1000);
 
             BPMText.text = avg.ToString() + "\nBPM";
         }

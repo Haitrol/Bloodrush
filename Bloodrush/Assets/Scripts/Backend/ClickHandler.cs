@@ -4,6 +4,7 @@ using System.Collections;
 public class ClickHandler : MonoBehaviour {
 
     public LayerMask heartLayer;
+    BeatManager bm;
 
     Camera cam;
     Animator anim;
@@ -11,6 +12,7 @@ public class ClickHandler : MonoBehaviour {
     void Start()
     {
         cam = Camera.main.GetComponent<Camera>();
+        bm = GameObject.FindGameObjectWithTag("Managers").GetComponent<BeatManager>();
 
         if (!GameObject.FindWithTag("Heart"))
             Debug.Log("No Heart found! Did you forget to tag it?");
@@ -32,21 +34,21 @@ public class ClickHandler : MonoBehaviour {
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, heartLayer))
-        {
-            ScoreManager.IncreaseOxygen();
-            ScoreManager.IncreaseCalories();
-        }
+        CastRay(ray, heartLayer);
     }
 
     void DetectTap()
     {
         Ray ray = cam.ScreenPointToRay(Input.GetTouch(0).position);
 
-        if (Physics.Raycast(ray, heartLayer))
+        CastRay(ray, heartLayer);
+    }
+
+    void CastRay(Ray ray, LayerMask layer)
+    {
+        if (Physics.Raycast(ray, layer))
         {
-            ScoreManager.IncreaseOxygen();
-            ScoreManager.IncreaseCalories();
+            bm.Incr();
         }
     }
 }

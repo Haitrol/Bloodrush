@@ -11,7 +11,7 @@ public class BeatManager : MonoBehaviour {
     //implement animator
 
     //Function for InvokeRepeating
-    void Incr()
+    public void Incr()
     {
         ScoreManager.IncreaseOxygen();
         ScoreManager.IncreaseCalories();

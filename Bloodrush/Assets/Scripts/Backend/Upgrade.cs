@@ -2,11 +2,7 @@
 using System.Collections;
 
 public class Upgrade : MonoBehaviour {
-
-    //Ideally let designers define a growth calculation
-    //Curve
-    //public float growthRate = 1;
-        
+            
     public void BuyBPM(float BPMAmount, int CalCost, BeatManager bm)
     {
         bm.TimeBetweenBeats(BPMAmount);
