@@ -4,13 +4,13 @@ using System.Collections;
 
 public class CALUpgrade : Upgrade {
 
-    public int CALMultIncr;
-    public int o2PBCost;
-    public int O2Cost;
+    public int calMultIncr;
+    public int o2PbCost;
+    public int o2Cost;
 
-    Button upgradeButton;
+    private Button _upgradeButton;
 
-    void Start()
+    private void Start()
     {
         if (!GetComponent<Button>())
         {
@@ -19,23 +19,23 @@ public class CALUpgrade : Upgrade {
         }
         else
         {
-            upgradeButton = GetComponent<Button>();
+            _upgradeButton = GetComponent<Button>();
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (upgradeButton)
+        if (_upgradeButton)
         {
-            if (ScoreManager.oxygen < O2Cost || ScoreManager.multiplier < o2PBCost)
-                upgradeButton.interactable = false;
+            if (ScoreManager.oxygen < o2Cost || ScoreManager.multiplier < o2PbCost)
+                _upgradeButton.interactable = false;
             else
-                upgradeButton.interactable = true;
+                _upgradeButton.interactable = true;
         }
     }
 
     public void LevelUp()
     {
-        BuyCAL(CALMultIncr, O2Cost, o2PBCost);
+        BuyCAL(calMultIncr, o2Cost, o2PbCost);
     }
 }

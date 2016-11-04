@@ -7,12 +7,12 @@ public class BPMUpgrade : Upgrade {
     public float BPMIncrease;
     public int CALCost;
 
-    Button upgradeButton;
-    BeatManager bm;
+    private Button _upgradeButton;
+    private BeatManager _bm;
 
-    void Start()
+    private void Start()
     {
-        bm = GameObject.FindGameObjectWithTag("Managers").GetComponent<BeatManager>();
+        _bm = GameObject.FindGameObjectWithTag("Managers").GetComponent<BeatManager>();
 
         if (!GetComponent<Button>())
         {
@@ -20,23 +20,20 @@ public class BPMUpgrade : Upgrade {
         }
         else
         {
-            upgradeButton = GetComponent<Button>();
+            _upgradeButton = GetComponent<Button>();
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (upgradeButton)
+        if (_upgradeButton)
         {
-            if (ScoreManager.calories < CALCost)
-                upgradeButton.interactable = false;
-            else
-                upgradeButton.interactable = true;
+            _upgradeButton.interactable = ScoreManager.calories >= CALCost;
         }
     }
 
     public void LevelUp()
     {
-        BuyBPM(BPMIncrease, CALCost, bm);
+        BuyBPM(BPMIncrease, CALCost, _bm);
     }
 }
