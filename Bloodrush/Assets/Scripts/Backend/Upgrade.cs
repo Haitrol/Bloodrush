@@ -2,40 +2,24 @@
 using System.Collections;
 
 public class Upgrade : MonoBehaviour {
-
-    ScoreManager sm;
-    BeatManager bm;
-
-    public int cost;
-    public int BPMAmount;
-    public int BCAmount;
-    public int CALAmount;
-
-    //Curve
-    //public float growthRate = 1;
-
-    void Start()
-    {
-        GameObject managerObj = GameObject.FindGameObjectWithTag("Managers");
-        sm = managerObj.GetComponent<ScoreManager>();
-        bm = managerObj.GetComponent<BeatManager>();
-    }
-    
-    public void BuyBPM()
+            
+    public void BuyBPM(float BPMAmount, int CalCost, BeatManager bm)
     {
         bm.TimeBetweenBeats(BPMAmount);
-        sm.DecreaseOxygen(cost);
+        ScoreManager.DecreaseCalories(CalCost);
     }
 
-    public void BuyBC()
+    public void BuyBC(int BCAmount, int O2Cost)
     {
-        sm.IncreaseMult(BCAmount);
-        sm.DecreaseOxygen(cost);
+        ScoreManager.IncreaseMult(BCAmount);
+        ScoreManager.DecreaseOxygen(O2Cost);
     }
 
-    public void BuyCAL()
+    public void BuyCAL(int CalAmount, int O2Cost, int O2pBCost)
     {
-        //todo
+        ScoreManager.IncreaseCALMult(CalAmount);
+        ScoreManager.DecreaseOxygen(O2Cost);
+        ScoreManager.DecreaseMult(O2pBCost);
     }
 
 }

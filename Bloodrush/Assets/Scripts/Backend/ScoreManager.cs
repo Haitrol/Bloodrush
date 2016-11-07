@@ -7,45 +7,82 @@ public class ScoreManager : MonoBehaviour {
     public static int oxygen { get; set; }
     public static int calories { get; set; }
     public static float multiplier { get; set; }
+    public static float calMultiplier { get; set; }
 
     public int oxygenBaseGain = 1;
     public int calorieBaseGain = 1;
 
-    public Text scoreText;
+    public Text O2Text;
+    public Text CALText;
+
+    static int obg;
+    static int cbg;
 
     void Start()
     {
         multiplier = 1;
+        calMultiplier = 0;
+        obg = oxygenBaseGain;
+        cbg = calorieBaseGain;
     }
 
     void Update()
     {
-        scoreText.text = oxygen.ToString();
+        O2Text.text = oxygen.ToString();
+        CALText.text = calories.ToString();
+
+        //Debug.Log(calMultiplier + " " + cbg);
     }
 
-    int CalculateAmount()
+    static int CalculateO2Amount()
     {
-        float calc = oxygen + oxygenBaseGain * multiplier;
+        float calc = oxygen + obg * multiplier;
         return (int)calc;
     }
 
-    public void IncreaseOxygen()
+    static int CalculateCALAmount()
     {
-        oxygen = CalculateAmount();
+        float calc = calories + cbg * calMultiplier;
+        return (int)calc;
     }
 
-    public void DecreaseOxygen(int amount)
+    public static void IncreaseOxygen()
+    {
+        oxygen = CalculateO2Amount();
+    }
+
+    public static void DecreaseOxygen(int amount)
     {
         oxygen = oxygen - amount;
     }
 
-    public void IncreaseMult(float amount)
+    public static void IncreaseCalories()
+    {
+        calories = CalculateCALAmount();
+    }
+
+    public static void DecreaseCalories(int amount)
+    {
+        calories = calories - amount;
+    }
+
+    public static void IncreaseMult(float amount)
     {
         multiplier += amount;
     }
     
-    public void DecreaseMult(float amount)
+    public static void DecreaseMult(float amount)
     {
         multiplier -= amount;
-    }    
+    }
+
+    public static void IncreaseCALMult(float amount)
+    {
+        calMultiplier += amount;
+    }
+
+    public static void DecreaseCALMult(float amount)
+    {
+        calMultiplier -= amount;
+    }
 }
