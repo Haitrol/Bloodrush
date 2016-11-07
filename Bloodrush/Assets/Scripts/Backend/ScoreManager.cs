@@ -1,24 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
-public class ScoreManager : MonoBehaviour {
+public class ScoreManager : MonoBehaviour
+{
+    private static int obg;
+    private static int cbg;
+    public int calorieBaseGain = 1;
+    public Text CALText;
+
+    public Text O2Text;
+
+    public int oxygenBaseGain = 1;
 
     public static int oxygen { get; set; }
     public static int calories { get; set; }
     public static float multiplier { get; set; }
     public static float calMultiplier { get; set; }
 
-    public int oxygenBaseGain = 1;
-    public int calorieBaseGain = 1;
-
-    public Text O2Text;
-    public Text CALText;
-
-    static int obg;
-    static int cbg;
-
-    void Start()
+    private void Start()
     {
         multiplier = 1;
         calMultiplier = 0;
@@ -26,7 +25,7 @@ public class ScoreManager : MonoBehaviour {
         cbg = calorieBaseGain;
     }
 
-    void Update()
+    private void Update()
     {
         O2Text.text = oxygen.ToString();
         CALText.text = calories.ToString();
@@ -34,16 +33,16 @@ public class ScoreManager : MonoBehaviour {
         //Debug.Log(calMultiplier + " " + cbg);
     }
 
-    static int CalculateO2Amount()
+    private static int CalculateO2Amount()
     {
-        float calc = oxygen + obg * multiplier;
-        return (int)calc;
+        var calc = oxygen + obg*multiplier;
+        return (int) calc;
     }
 
-    static int CalculateCALAmount()
+    private static int CalculateCALAmount()
     {
-        float calc = calories + cbg * calMultiplier;
-        return (int)calc;
+        var calc = calories + cbg*calMultiplier;
+        return (int) calc;
     }
 
     public static void IncreaseOxygen()
@@ -70,7 +69,7 @@ public class ScoreManager : MonoBehaviour {
     {
         multiplier += amount;
     }
-    
+
     public static void DecreaseMult(float amount)
     {
         multiplier -= amount;

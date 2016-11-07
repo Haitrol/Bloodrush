@@ -7,9 +7,9 @@ public class BCUpgrade : Upgrade {
     public int multiplierIncrease;
     public int o2Cost;
 
-    Button upgradeButton;
+    private Button _upgradeButton;
 
-    void Start()
+    private void Start()
     {
         if (!GetComponent<Button>())
         {
@@ -18,18 +18,15 @@ public class BCUpgrade : Upgrade {
         }
         else
         {
-            upgradeButton = GetComponent<Button>();
+            _upgradeButton = GetComponent<Button>();
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (upgradeButton)
+        if (_upgradeButton)
         {
-            if (ScoreManager.oxygen < o2Cost)
-                upgradeButton.interactable = false;
-            else
-                upgradeButton.interactable = true;
+            _upgradeButton.interactable = ScoreManager.oxygen >= o2Cost;
         }
     }
 

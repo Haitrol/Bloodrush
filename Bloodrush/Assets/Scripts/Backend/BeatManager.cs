@@ -6,7 +6,7 @@ public class BeatManager : MonoBehaviour {
     public float beatDelay = 1;
 
     [HideInInspector]
-    public int beat = 0;
+    public int Beat = 0;
 
     //implement animator
 
@@ -15,7 +15,7 @@ public class BeatManager : MonoBehaviour {
     {
         ScoreManager.IncreaseOxygen();
         ScoreManager.IncreaseCalories();
-        beat++;
+        Beat++;
     }
 
     //Decreases the time between beats by a specified amount
